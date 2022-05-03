@@ -4,6 +4,7 @@ import dateFormat from "dateformat";
 
 import type { Weather } from '../types';
 import { temperatureText } from './styleVars';
+import WeatherIcon from './Icons';
 
 const tempStyle = css({
   ...temperatureText,
@@ -22,7 +23,7 @@ const componentStyle = css({
 
 const WeatherDaily: React.FC<Weather> = ({ date, temp, weather }) => (<div className={componentStyle}>
   <p className={dayStyle}>{dateFormat(date, 'ddd')}</p>
-  <i>{weather}</i>
+  <WeatherIcon name={weather} size={48} />
   <p className={tempStyle}>{Math.round(temp)}</p>
 </div >);
 
