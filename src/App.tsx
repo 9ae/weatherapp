@@ -1,25 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import { getNow, getFuture } from './openweather';
+import AppContext, { DEFAULT, AppContextType } from './context';
 
 function App() {
+  // TODO use geo location API
+  // https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition
+
+  const [ctx, setCtx] = useState<AppContextType>(DEFAULT);
+  const { tempUnit, lat, lon } = ctx;
+
+  useEffect(() => {
+    (async () => {
+      if (!ctx.now) {
+        const now = await getNow(tempUnit, lat, lon)
+        setCtx({ ...ctx, now });
+        console.log('now', now);
+      }
+
+      if (!ctx.future) {
+        const future = await getFuture(tempUnit, lat, lon)
+        console.log('future', future);
+        setCtx({ ...ctx, future })
+      }
+    })();
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContext.Provider value={ctx}>
+      <p>{ctx.now?.weather || '...fetching weather'}</p>
+    </AppContext.Provider>
   );
 }
 
