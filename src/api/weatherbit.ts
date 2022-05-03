@@ -1,5 +1,5 @@
-import { TempUnit } from './types'
-import type { Weather, WeatherNow } from './types'
+import { TempUnit } from '../types'
+import type { Weather, WeatherNow } from '../types'
 
 const key = '43ba888105bd4de9a3cc2f08d2e19b09';
 const host = 'https://api.weatherbit.io/v2.0/';
