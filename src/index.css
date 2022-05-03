@@ -1,6 +1,18 @@
 body {
   margin: 0;
   font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+  --color-blue-light: #65AED5;
+  --color-blue-medium: #2685BD;
+  --color-blue-dark: #1768AA;
+
+  --size-xl: 48px;
+  --size-l: 24px;
+  --size-m: 18px;
+  --size-s: 14px;
 }
