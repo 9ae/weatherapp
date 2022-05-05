@@ -53,6 +53,9 @@ function App() {
     <AppContext.Provider value={ctx}>
       <div className={css({
         backgroundColor: 'var(--color-sky)',
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh'
       })}>
         <div className={css({
           display: "flex",
@@ -85,7 +88,8 @@ function App() {
           flexDirection: 'column',
           gap: 'var(--space-s)',
           backgroundColor: '#fff',
-          boxShadow: '0 0 15px 0 rgba(0,0,0,0.2)'
+          boxShadow: '0 0 15px 0 rgba(0,0,0,0.2)',
+          flexGrow: 2
         })}>
           {ctx.future && ctx.future.map((day: Weather, i: number) => <WeatherDaily key={i} {...day} />)}
         </div>
