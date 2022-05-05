@@ -32,10 +32,11 @@ const SwitchTemp: React.FC<SwitchProps> = ({ dispatch }) => {
   const formStyle = css({
     backgroundColor: 'var(--color-blue-medium)',
     height: '24px',
-    width: '50px',
+    width: '55px',
     borderRadius: '12px',
     zIndex: 0,
     position: 'relative',
+    cursor: 'pointer',
     ':before': {
       content: '" "',
       zIndex: 1,
@@ -45,7 +46,7 @@ const SwitchTemp: React.FC<SwitchProps> = ({ dispatch }) => {
       borderRadius: '10px',
       position: 'absolute',
       backgroundColor: 'white',
-      left: isF ? '27px' : '3px',
+      left: isF ? '32px' : '3px',
       top: '2px',
       transition: 'left 0.5s'
     }

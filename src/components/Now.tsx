@@ -13,11 +13,16 @@ const componentStyle = css({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'center',
-  alignItems: 'flex-end'
+  alignItems: 'flex-end',
+  '@media (min-width:768px)': {
+    justifyContent: 'flex-start',
+    alignSelf: 'self-start'
+  },
+  //  '@media (min-width:1024px)': {}
 })
 
 const WeatherNow = () => (<AppContext.Consumer>{({ now, tempUnit }) => {
-  const speedUnit = tempUnit == TempUnit.F ? "mph" : "km/h";
+  const speedUnit = tempUnit === TempUnit.F ? "mph" : "km/h";
   return (<div className={componentStyle}>
     <div className={tempStyle}>{now?.temp}</div>
     <WeatherIcon name={now?.weather} size={48} />

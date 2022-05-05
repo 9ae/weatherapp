@@ -17,7 +17,18 @@ const componentStyle = css({
   alignItems: 'center',
   flexDirection: 'row',
   '@media (min-width:768px)': {
-    flexDirection: 'column'
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    padding: 'var(--space-m) var(--space-l)',
+    position: 'relative',
+    borderRight: '#D8D8D8 1px solid',
+
+    ':last-child': {
+      border: 'none'
+    }
+  },
+  '@media (min-width:1024px)': {
+    height: 'fit-content',
   }
 });
 const iconStyle = css({
