@@ -21,14 +21,14 @@ const componentStyle = css({
     justifyContent: 'flex-start',
     padding: 'var(--space-m) var(--space-l)',
     position: 'relative',
-    borderRight: '#D8D8D8 1px solid',
-
-    ':last-child': {
-      border: 'none'
-    }
   },
   '@media (min-width:1024px)': {
     height: 'fit-content',
+    borderRight: '#D8D8D8 1px solid',
+
+    ':last-child': {
+      borderRight: 'none'
+    }
   }
 });
 const iconStyle = css({

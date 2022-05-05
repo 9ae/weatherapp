@@ -127,12 +127,15 @@ function App() {
     backgroundColor: '#fff',
     boxShadow: '0 0 15px 0 rgba(0,0,0,0.2)',
     flexGrow: 2,
+    padding: 'var(--space-m) 0',
+    justifyContent: 'space-around',
     '@media (min-width:768px)': {
       flexDirection: 'row',
       gap: 'unset',
       justifyContent: 'center',
       flexGrow: 1,
       height: 'max-content',
+      padding: 0
     },
     '@media (min-width:1024px)': {
       borderRadius: '0 0 3px 3px',
@@ -165,7 +168,7 @@ function App() {
     boxSizing: 'border-box',
 
     // mobile specs
-    height: '360px',
+    height: '350px',
     backgroundSize: 'contain',
 
     '@media (min-width:768px)': {
