@@ -7,14 +7,16 @@ export type AppContextType = {
   lat: number,
   lon: number,
   now?: WeatherNow
-  future: Weather[]
+  future: Weather[],
+  isFetchPending: boolean
 }
 
 export const DEFAULT: AppContextType = {
   tempUnit: TempUnit.F,
   lat: 32.779167,
   lon: -96.808891,
-  future: []
+  future: [],
+  isFetchPending: true
 }
 
 export enum ActionType {
@@ -35,15 +37,18 @@ export type AppAction = {
 
 export function reducer(state: AppContextType, action: AppAction): AppContextType {
   switch (action.type) {
+    // case ActionType.GetWeather: {
+    //   return {...state}
+    // }
     case ActionType.SetWeather:
       {
-        return { ...state, now: action.payload.now, future: action.payload.future }
+        return { ...state, now: action.payload.now, future: action.payload.future, isFetchPending: false }
       }
     case ActionType.ToggleTempUnit: {
       if (state.tempUnit === TempUnit.F) {
-        return { ...state, tempUnit: TempUnit.C }
+        return { ...state, tempUnit: TempUnit.C, isFetchPending: true }
       } else {
-        return { ...state, tempUnit: TempUnit.F }
+        return { ...state, tempUnit: TempUnit.F, isFetchPending: true }
       }
     }
   }

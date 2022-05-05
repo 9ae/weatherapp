@@ -1,26 +1,22 @@
 import { TempUnit } from '../types'
 import type { Weather, WeatherNow } from '../types'
 
-const key = '4545683233d39b239fa15b83332b2deb';
+const key = '1f3f77076377f148191baa1c92d8d3a4';
 const host = 'https://api.openweathermap.org/data/2.5/';
 
-export const getNow = async (unit: TempUnit, lat: number, lon: number): Promise<WeatherNow> => {
-  const response = await fetch(`${host}weather?appid=${key}&lat=${lat}&lon=${lon}&units=${unit}`)
-  const data = await response.json()
-  return {
-    date: new Date(),
-    temp: data.main.temp,
-    weather: data.weather[0].main,
-    windSpeed: data.wind.speed
+const tempString = (u: TempUnit): string => {
+  switch (u) {
+    case TempUnit.C: return 'metric';
+    case TempUnit.F: return 'imperial';
   }
 }
 
 export const getWeather = async (unit: TempUnit, lat: number, lon: number): Promise<{ now: WeatherNow, future: Weather[] }> => {
-  const response = await fetch(`${host}onecall?appid=${key}&lat=${lat}&lon=${lon}&units=${unit}&exclude=minutely,hourly,alerts`)
+  const response = await fetch(`${host}onecall?appid=${key}&lat=${lat}&lon=${lon}&units=${tempString(unit)}&exclude=minutely,hourly,alerts`)
   const data = await response.json();
+  console.log('fetched weather', data);
   if (data.daily.length < 6) {
-    // TODO better error messaging
-    throw Error("not enough days");
+    throw Error("Error fetching next five 5 days forecast: not enough days");
   }
   const forecast = data.daily.slice(1, 6);
   const future = forecast.map((day: any) => ({

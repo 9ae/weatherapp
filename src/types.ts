@@ -1,7 +1,6 @@
-// TODO put the strings dependent on API
 export enum TempUnit {
-  F = 'imperial', // 'I'
-  C = 'metric' // 'M'
+  F,
+  C
 }
 
 export type Weather = {

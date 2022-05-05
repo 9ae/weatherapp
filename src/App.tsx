@@ -3,7 +3,7 @@ import { css } from '@emotion/css'
 
 import { Weather } from './types';
 import { getWeather } from './api/openweather';
-import AppContext, { DEFAULT, AppContextType, reducer, ActionType } from './context';
+import AppContext, { DEFAULT, reducer, ActionType } from './context';
 import WeatherNow from './components/Now';
 import WeatherDaily from './components/Daily';
 import SwitchTemp from './components/SwitchTemp';
@@ -32,8 +32,10 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      const { now, future } = await getWeather(tempUnit, lat, lon)
-      dispatch({ type: ActionType.SetWeather, payload: { now, future } });
+      if (ctx.now === null || ctx.isFetchPending) {
+        const { now, future } = await getWeather(tempUnit, lat, lon)
+        dispatch({ type: ActionType.SetWeather, payload: { now, future } });
+      }
     })();
   });
 
@@ -53,13 +55,36 @@ function App() {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100vh',
+        position: 'relative',
 
         '@media (min-width:1024px)': {
           width: '670px',
           minHeight: '510px',
           borderRadius: '3px',
           margin: '0 auto',
-          marginTop: 'var(--space-m)'
+          marginTop: 'var(--space-m)',
+          ':before': {
+            content: '""',
+            backgroundImage: `url(${process.env.PUBLIC_URL}/cloud_left.svg)`,
+            backgroundRepeat: 'no-repeat',
+            display: 'block',
+            width: '145px',
+            height: '83px',
+            position: 'absolute',
+            left: '-90px',
+            bottom: '212px',
+          },
+          ':after': {
+            content: '""',
+            backgroundImage: `url(${process.env.PUBLIC_URL}/cloud_right.svg)`,
+            backgroundRepeat: 'no-repeat',
+            display: 'block',
+            width: '207px',
+            height: '113px',
+            position: 'absolute',
+            right: '-90px',
+            top: '50px',
+          }
         }
       })}>
         <div className={css({
