@@ -7,16 +7,18 @@ export type AppContextType = {
   lat: number,
   lon: number,
   now?: WeatherNow
-  future?: Weather[]
+  future: Weather[]
 }
 
 export const DEFAULT: AppContextType = {
   tempUnit: TempUnit.F,
   lat: 32.779167,
-  lon: -96.808891
+  lon: -96.808891,
+  future: []
 }
 
 export enum ActionType {
+  //  GetWeather = 'get_weather',
   SetWeather = 'set_weather',
   ToggleTempUnit = 'toggle_temp_unit'
 }
@@ -35,13 +37,7 @@ export function reducer(state: AppContextType, action: AppAction): AppContextTyp
   switch (action.type) {
     case ActionType.SetWeather:
       {
-        if (action.payload.now) {
-          return { ...state, now: action.payload.now }
-        }
-        if (action.payload.future) {
-          return { ...state, future: action.payload.future }
-        }
-        break;
+        return { ...state, now: action.payload.now, future: action.payload.future }
       }
     case ActionType.ToggleTempUnit: {
       if (state.tempUnit === TempUnit.F) {

@@ -15,18 +15,25 @@ export const getNow = async (unit: TempUnit, lat: number, lon: number): Promise<
   }
 }
 
-// TODO don't exclude current and just make one API call
-export const getFuture = async (unit: TempUnit, lat: number, lon: number): Promise<Weather[]> => {
-  const response = await fetch(`${host}onecall?appid=${key}&lat=${lat}&lon=${lon}&units=${unit}&exclude=current,minutely,hourly,alerts`)
+export const getWeather = async (unit: TempUnit, lat: number, lon: number): Promise<{ now: WeatherNow, future: Weather[] }> => {
+  const response = await fetch(`${host}onecall?appid=${key}&lat=${lat}&lon=${lon}&units=${unit}&exclude=minutely,hourly,alerts`)
   const data = await response.json();
-  if (data.daily.length < 5) {
+  if (data.daily.length < 6) {
     // TODO better error messaging
     throw Error("not enough days");
   }
-  const forecast = data.daily.slice(0, 5);
-  return forecast.map((day: any) => ({
+  const forecast = data.daily.slice(1, 6);
+  const future = forecast.map((day: any) => ({
     date: new Date(day.dt * 1000),
     temp: (day.temp.min + day.temp.max) * 0.5,
     weather: day.weather[0].main
   }))
+
+  const now: WeatherNow = {
+    date: new Date(),
+    temp: data.current.temp,
+    weather: data.current.weather[0].main,
+    windSpeed: data.current.wind_speed
+  }
+  return { now, future }
 }

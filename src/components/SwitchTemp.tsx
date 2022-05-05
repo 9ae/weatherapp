@@ -23,9 +23,7 @@ type SwitchProps = {
 const SwitchTemp: React.FC<SwitchProps> = ({ dispatch }) => {
   const ctx = useContext(AppContext);
   const onToogle = () => {
-    console.log('toogle temp unit')
     dispatch({ type: ActionType.ToggleTempUnit })
-    //TODO trigger a refetch from API
   }
   const isF = ctx.tempUnit === TempUnit.F;
 
