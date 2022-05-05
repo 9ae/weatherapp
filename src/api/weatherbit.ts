@@ -22,7 +22,8 @@ export const getWeather = async (unit: TempUnit, lat: number, lon: number): Prom
     date: new Date(),
     temp: nowData.temp,
     weather: nowData.weather.description,
-    windSpeed: nowData.wind_spd
+    windSpeed: nowData.wind_spd,
+    weatherDescription: nowData.weather.description
   }
 
   const futureReq = await fetch(`${host}forecast/daily?key=${key}&country=US&lat=${lat}&lon=${lon}&unit=${tempString(unit)}&days=5`)

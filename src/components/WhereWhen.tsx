@@ -1,6 +1,8 @@
+import React, { useContext } from 'react';
 import { css } from '@emotion/css'
 import { IoLocationSharp } from 'react-icons/io5'
 import dateFormat from "dateformat";
+import AppContext from '../context';
 
 const dateStyle = css({
   marginBlockStart: 'var(--space-xs)',
@@ -20,9 +22,13 @@ const style = css({
   }
 })
 
-const WhereWhen = () => <div className={style}>
-  <IoLocationSharp size={16} /> <span className={css(placeStyle)}>Dallas, TX</span>
-  <p className={dateStyle}>{dateFormat(new Date(), 'dddd, mmm d, yyyy')}</p>
-</div>;
+const WhereWhen = () => {
+  const { city } = useContext(AppContext)
+
+  return (<div className={style}>
+    <IoLocationSharp size={16} /> <span className={css(placeStyle)}>{city}</span>
+    <p className={dateStyle}>{dateFormat(new Date(), 'dddd, mmm d, yyyy')}</p>
+  </div>)
+};
 
 export default WhereWhen;

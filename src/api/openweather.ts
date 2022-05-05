@@ -29,7 +29,8 @@ export const getWeather = async (unit: TempUnit, lat: number, lon: number): Prom
     date: new Date(),
     temp: data.current.temp,
     weather: data.current.weather[0].main,
-    windSpeed: data.current.wind_speed
+    windSpeed: data.current.wind_speed,
+    weatherDescription: data.current.weather[0].description
   }
   return { now, future }
 }

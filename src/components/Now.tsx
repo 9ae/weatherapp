@@ -13,7 +13,7 @@ const componentStyle = css({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'center',
-  alignItems: 'flex-end',
+  alignItems: 'center',
   '@media (min-width:768px)': {
     justifyContent: 'flex-start',
     alignSelf: 'self-start'
@@ -24,11 +24,11 @@ const componentStyle = css({
 const WeatherNow = () => (<AppContext.Consumer>{({ now, tempUnit }) => {
   const speedUnit = tempUnit === TempUnit.F ? "mph" : "km/h";
   return (<div className={componentStyle}>
-    <div className={tempStyle}>{now?.temp}</div>
-    <WeatherIcon name={now?.weather} size={48} />
+    <div className={tempStyle}>{now?.temp || " "}</div>
+    <WeatherIcon name={now?.weather} size={64} />
     <div className={conditionStyle}>
-      {now?.weather}<br />
-      {now?.windSpeed} {speedUnit}
+      <span style={{ textTransform: 'capitalize' }}>{now?.weatherDescription || " "}</span><br />
+      {now?.windSpeed || "0"} {speedUnit}
     </div>
   </div>)
 }}</AppContext.Consumer>);
