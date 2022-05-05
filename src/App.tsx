@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { getNow, getFuture } from './api/openweather';
-import AppContext, { DEFAULT, AppContextType } from './context';
+import AppContext, { DEFAULT, AppContextType, reducer, ActionType } from './context';
 
 import WeatherNow from './components/Now';
 import WeatherDaily from './components/Daily';
+import SwitchTemp from './components/SwitchTemp';
 import { Weather } from './types';
 
 function getFromStorage(): AppContextType {
@@ -29,30 +30,27 @@ function App() {
   // https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition
 
   const defaultCtx = getFromStorage();
-  const [ctx, setCtx] = useState<AppContextType>(defaultCtx);
+  const [ctx, dispatch] = useReducer(reducer, defaultCtx);
   const { tempUnit, lat, lon } = ctx;
-
-  const saveContext = (newCtx: AppContextType) => {
-    setCtx(newCtx)
-    localStorage.setItem("ctx", JSON.stringify(newCtx))
-  }
 
   useEffect(() => {
     (async () => {
       if (!ctx.now) {
         const now = await getNow(tempUnit, lat, lon)
-        saveContext({ ...ctx, now });
+        dispatch({ type: ActionType.SetWeather, payload: { now } });
       }
 
       if (!ctx.future) {
         const future = await getFuture(tempUnit, lat, lon)
-        saveContext({ ...ctx, future })
+        dispatch({ type: ActionType.SetWeather, payload: { future } });
       }
     })();
   });
 
   return (
     <AppContext.Provider value={ctx}>
+      <SwitchTemp dispatch={dispatch} />
+
       <WeatherNow />
 
       <div style={{ display: "inline-block" }}>
