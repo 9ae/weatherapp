@@ -1,11 +1,13 @@
 import React, { useReducer, useEffect } from 'react';
+import { css } from '@emotion/css'
+
+import { Weather } from './types';
 import { getNow, getFuture } from './api/openweather';
 import AppContext, { DEFAULT, AppContextType, reducer, ActionType } from './context';
-
 import WeatherNow from './components/Now';
 import WeatherDaily from './components/Daily';
 import SwitchTemp from './components/SwitchTemp';
-import { Weather } from './types';
+import WhereWhen from './components/WhereWhen';
 
 function getFromStorage(): AppContextType {
   const savedCtx = localStorage.getItem("ctx");
@@ -49,12 +51,44 @@ function App() {
 
   return (
     <AppContext.Provider value={ctx}>
-      <SwitchTemp dispatch={dispatch} />
+      <div className={css({
+        backgroundColor: 'var(--color-sky)',
+      })}>
+        <div className={css({
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          padding: 'var(--space-s)'
+        })}>
+          <WhereWhen />
+          <SwitchTemp dispatch={dispatch} />
+        </div>
 
-      <WeatherNow />
+        <div className={css({
+          width: '100%',
+          height: '260px',
+          marginTop: '40px',
+          backgroundImage: `url(${process.env.PUBLIC_URL}/dallas.png)`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'contain',
+          backgroundPosition: 'bottom center'
+        })}>
+          <WeatherNow />
+          {/* <img src={`${process.env.PUBLIC_URL}/dallas.png`} className={css({
+            width: '70%',
+            margin: '0 15%'
+          })} /> */}
+        </div>
 
-      <div style={{ display: "inline-block" }}>
-        {ctx.future && ctx.future.map((day: Weather, i: number) => <WeatherDaily key={i} {...day} />)}
+        <div className={css({
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 'var(--space-s)',
+          backgroundColor: '#fff',
+          boxShadow: '0 0 15px 0 rgba(0,0,0,0.2)'
+        })}>
+          {ctx.future && ctx.future.map((day: Weather, i: number) => <WeatherDaily key={i} {...day} />)}
+        </div>
       </div>
     </AppContext.Provider>
   );

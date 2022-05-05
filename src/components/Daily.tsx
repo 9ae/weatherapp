@@ -1,5 +1,5 @@
-import { css } from '@emotion/css'
 import React from 'react';
+import { css } from '@emotion/css'
 import dateFormat from "dateformat";
 
 import type { Weather } from '../types';
@@ -20,11 +20,14 @@ const componentStyle = css({
     flexDirection: 'column'
   }
 });
+const iconStyle = css({
+  color: 'var(--color-blue-light)'
+})
 
 const WeatherDaily: React.FC<Weather> = ({ date, temp, weather }) => (<div className={componentStyle}>
-  <p className={dayStyle}>{dateFormat(date, 'ddd')}</p>
-  <WeatherIcon name={weather} size={48} />
-  <p className={tempStyle}>{Math.round(temp)}</p>
+  <span className={dayStyle}>{dateFormat(date, 'ddd')}</span>
+  <span className={iconStyle}><WeatherIcon name={weather} size={48} /></span>
+  <span className={tempStyle}>{Math.round(temp)}</span>
 </div >);
 
 export default WeatherDaily;

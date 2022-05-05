@@ -10,9 +10,14 @@ body {
   --color-blue-light: #65AED5;
   --color-blue-medium: #2685BD;
   --color-blue-dark: #1768AA;
+  --color-sky: #D9FBFF;
 
   --size-xl: 48px;
   --size-l: 24px;
   --size-m: 18px;
   --size-s: 14px;
+
+  --space-m: 20px;
+  --space-s: 10px;
+  --space-xs: 5px;
 }
